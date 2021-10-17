@@ -1,32 +1,16 @@
 package ru.tuanviet.javabox;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopNews {
 
     private List<News> newsList;
 
-    public void topNewsParser(Top newsId) {
-        if (newsId == null || "".equals(newsId.getNewsId())) {
+    public TopNews(List<News> parsedNewsList) {
+        if (parsedNewsList == null || parsedNewsList.isEmpty()) {
             throw new IllegalArgumentException();
         }
-        newsList = new ArrayList<>();
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<String>>() {
-        }.getType();
-        List<String> list = gson.fromJson(newsId.getNewsId(), listType);
-        int i = 0;
-        for (String str : list) {
-            newsList.add(new News());
-            newsList.get(i).setId(str);
-            i++;
-        }
-
+        this.newsList = parsedNewsList;
     }
 
     public List<News> getNewsList() {

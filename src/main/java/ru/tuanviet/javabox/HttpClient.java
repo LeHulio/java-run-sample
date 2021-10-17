@@ -5,20 +5,21 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HttpClient {
     private String response;
 
-    public HttpClient(String str) {
-        response = getHttpResponse(str);
+    public HttpClient(String adress) {
+        response = getHttpResponse(adress);
     }
 
-    public String getResponse() {
-        return response;
-    }
 
-    private String getHttpResponse(String adress){
+    private String getHttpResponse(String adress) {
+        if (adress == null || "".equals(adress)) {
+            throw new IllegalArgumentException();
+        }
         OkHttpClient client = new OkHttpClient()
                 .newBuilder()
                 .connectTimeout(40, TimeUnit.SECONDS)
@@ -34,9 +35,18 @@ public class HttpClient {
                 .Builder()
                 .url(url)
                 .build();
-        Response response = client.newCall(request).execute();
-        String responseBody = response.body().string();
+        String responseBody = null;
+        try {
+            Response response = client.newCall(request).execute();
+            responseBody = response.body().string();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return responseBody;
+    }
+
+    public String getResponse() {
+        return response;
     }
 
 }

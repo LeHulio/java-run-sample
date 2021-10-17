@@ -3,6 +3,10 @@ package ru.tuanviet.javabox;
 public class News {
     private String id;
 
+    public News(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

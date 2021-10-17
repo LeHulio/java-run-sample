@@ -1,6 +1,6 @@
 package ru.tuanviet.javabox;
 
-public class DetailedNews extends News{
+public class DetailedNews{
     private String id;
     private String score;
     private String title;
@@ -8,7 +8,7 @@ public class DetailedNews extends News{
     private String url;
 
 
-    @Override
+
     public String getId() {
         return id;
     }
@@ -31,5 +31,10 @@ public class DetailedNews extends News{
 
     public void setUrlIfIsEmpty(String url) {
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return title + " " + "(" + score + ")" + "\n" + url;
     }
 }
